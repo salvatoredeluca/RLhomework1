@@ -33,6 +33,62 @@ def generate_launch_description():
 
 
 
+    xacro_arm = os.path.join(rlhomework1_path, "urdf", "arm.urdf.xacro")
+    
+
+    robot_description_arm_xacro = {"robot_description": Command(['xacro ', xacro_arm])}
+
+
+   
+
+    joint_state_publisher_node = Node(
+        package="joint_state_publisher_gui",
+        executable="joint_state_publisher_gui",
+    )
+   
+    robot_state_publisher_node = Node(
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        output="both",
+        parameters=[robot_description_arm_xacro,
+                    {"use_sim_time": True},
+            ],
+        remappings=[('/robot_description', '/robot_description')]
+    )
+
+    # rviz_node = Node(
+    #     package="rviz2",
+    #     executable="rviz2",
+    #     name="rviz2",
+    #     output="log",
+    #     arguments=["-d", LaunchConfiguration("rviz_config_file")],
+    # )
+
+
+    declared_arguments.append(DeclareLaunchArgument('gz_args', default_value='-r -v 1 empty.sdf',
+                              description='Arguments for gz_sim'),)
+
+    # joint_state_broadcaster = Node(
+    #     package="controller_manager",
+    #     executable="spawner",
+    #     arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager"],
+    # )  
+
+    
+    
+    nodes_to_start = [
+        robot_state_publisher_node,
+        joint_state_publisher_node,
+        #joint_state_broadcaster,
+        
+        
+    ]
+
+
+    return LaunchDescription( declared_arguments+nodes_to_start) 
+
+
+
     # declared_arguments.append(
     #     DeclareLaunchArgument(
     #         "rviz_config_file", 
@@ -44,41 +100,9 @@ def generate_launch_description():
     # )
   
 
-    urdf_arm = os.path.join(rlhomework1_path, "urdf", "arm.urdf")
-    with open(urdf_arm, 'r') as info:
-        arm_description = info.read()
 
 
-    arm_description_urdf = {"robot_description":arm_description }
-
-    joint_state_publisher_node = Node(
-        package="joint_state_publisher_gui",
-        executable="joint_state_publisher_gui",
-    )
-   
-    robot_state_publisher_node = Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        output="both",
-        parameters=[arm_description_urdf,
-                    {"use_sim_time": True},
-            ],
-        remappings=[('/robot_description', '/robot_description')]
-    )
-
-
-
-
-    rviz_node = Node(
-        package="rviz2",
-        executable="rviz2",
-        name="rviz2",
-        output="log",
-        arguments=["-d", LaunchConfiguration("rviz_config_file")],
-    )
-
-    
-    # rviz_node = Node(
+# rviz_node = Node(
     #     package="rviz2",
     #     executable="rviz2",
     #     name="rviz2",
@@ -145,12 +169,3 @@ def generate_launch_description():
     #     )
     # )
     
-    nodes_to_start = [
-        robot_state_publisher_node,
-        joint_state_publisher_node,
-        rviz_node
-        
-    ]
-
-
-    return LaunchDescription( declared_arguments+nodes_to_start) 

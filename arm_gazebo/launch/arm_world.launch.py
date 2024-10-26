@@ -18,7 +18,7 @@ from launch.event_handlers import OnProcessExit
 def generate_launch_description():
     declared_arguments = []
 
-    rl_21_10_2024_exercise_path = get_package_share_directory('arm_gazebo')
+    rlhomework1_path = get_package_share_directory('arm_description')
 
     # declared_arguments.append(
     #     DeclareLaunchArgument(
@@ -29,14 +29,20 @@ def generate_launch_description():
     #         description="RViz config file (absolute path) to use when launching rviz.",
     #     )
     # )
-  
+    
 
-    urdf_arm = os.path.join(rl_21_10_2024_exercise_path, "urdf", "arm.urdf")
-    with open(urdf_arm, 'r') as info:
-        arm_description = info.read()
+    xacro_arm = os.path.join(rlhomework1_path, "urdf", "arm.urdf.xacro")
+    
+
+    robot_description_arm_xacro = {"robot_description": Command(['xacro ', xacro_arm])}
 
 
-    arm_description_urdf = {"robot_description":arm_description }
+    # urdf_arm = os.path.join(rl_21_10_2024_exercise_path, "urdf", "arm.urdf")
+    # with open(urdf_arm, 'r') as info:
+    #     arm_description = info.read()
+
+
+    # arm_description_urdf = {"robot_description":arm_description }
 
 
 
@@ -51,19 +57,13 @@ def generate_launch_description():
         package="robot_state_publisher",
         executable="robot_state_publisher",
         output="both",
-        parameters=[arm_description_urdf,
+        parameters=[robot_description_arm_xacro ,
                     {"use_sim_time": True},
             ],
     remappings=[('/robot_description', '/robot_description')]    
     )
     
-    # rviz_node = Node(
-    #     package="rviz2",
-    #     executable="rviz2",
-    #     name="rviz2",
-    #     output="log",
-    #     arguments=["-d", LaunchConfiguration("rviz_config_file")],
-    # )
+    
 
 
     declared_arguments.append(DeclareLaunchArgument('gz_args', default_value='-r -v 1 empty.sdf',
@@ -96,6 +96,27 @@ def generate_launch_description():
 
      
 
+    nodes_to_start = [
+        joint_state_publisher_node,
+        robot_state_publisher_node,  
+        *ign
+    ]
+    return LaunchDescription(declared_arguments+nodes_to_start)
+
+
+
+
+
+    # rviz_node = Node(
+    #     package="rviz2",
+    #     executable="rviz2",
+    #     name="rviz2",
+    #     output="log",
+    #     arguments=["-d", LaunchConfiguration("rviz_config_file")],
+    # )
+
+
+
     # joint_state_broadcaster = Node(
     #     package="controller_manager",
     #     executable="spawner",
@@ -121,12 +142,3 @@ def generate_launch_description():
     #         event_handler=OnProcessExit(
     #             target_action=gz_spawn_entity,
     #             on_exit=[joint_state_broadca
-
-    nodes_to_start = [
-        joint_state_publisher_node,
-        robot_state_publisher_node,  
-        *ign
-        # delay_joint_traj_controller, 
-        # delay_join
-    ]
-    return LaunchDescription(declared_arguments+nodes_to_start)
