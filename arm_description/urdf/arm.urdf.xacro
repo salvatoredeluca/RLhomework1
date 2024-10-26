@@ -402,7 +402,7 @@
 
   <gazebo>  
     <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
-    <parameters>$(find arm_description)/config/position_controller.yaml</parameters>
+    <parameters>$(find arm_control)/config/arm_control.yaml</parameters>
       <controller_manager_prefix_node_name>controller_manager</controller_manager_prefix_node_name>
     </plugin>
   </gazebo>
