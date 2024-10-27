@@ -7,6 +7,14 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+
+
+add_executable(arm_control_node src/arm_controller.cpp)
+
+ament_target_dependencies(arm_control_node rclcpp std_msgs sensor_msgs)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -27,6 +35,10 @@ install(
   #DIRECTORY urdf meshes rviz ros2_control config moveit2 srdf launch
   DIRECTORY launch  config 
   DESTINATION share/${PROJECT_NAME})
+
+  install(TARGETS
+  arm_control_node
+  DESTINATION lib/${PROJECT_NAME})
 
 
 ament_package()

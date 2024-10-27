@@ -85,23 +85,6 @@ def generate_launch_description():
  
     # ign = [gazebo_ignition, gz_spawn_entity]
 
-
-
-    # robot_controllers = PathJoinSubstitution(
-    #     [
-    #         FindPackageShare("arm_control"),
-    #         "config",
-    #         "arm_control.yaml",
-    #     ]
-    # )
-
-    # control_node = Node(
-    #     package="controller_manager",
-    #     executable="ros2_control_node",
-    #     parameters=[robot_controllers],
-    #     output="both",
-    # )
-
      
 
     joint_state_broadcaster =Node(
@@ -152,6 +135,7 @@ def generate_launch_description():
     nodes_to_start = [
         joint_state_broadcaster,
         position_controller,
+       
         
     ]
 

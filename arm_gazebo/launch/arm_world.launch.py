@@ -77,7 +77,7 @@ def generate_launch_description():
             launch_arguments={'gz_args': LaunchConfiguration('gz_args')}.items()
     )
 
-    position = [0.0, 0.0, 0.65]
+    position = [0.0, 0.0, 0.05]
 
     gz_spawn_entity = Node(
         package='ros_gz_sim',
@@ -94,11 +94,25 @@ def generate_launch_description():
  
     ign = [gazebo_ignition, gz_spawn_entity]
 
+
+    bridge_camera = Node(
+        package='ros_ign_bridge',
+        executable='parameter_bridge',
+        arguments=[
+            '/camera@sensor_msgs/msg/Image@gz.msgs.Image',
+            '/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
+            '--ros-args', 
+            '-r', '/camera:=/videocamera',
+        ],
+        output='screen'
+    )
+
      
 
     nodes_to_start = [
         joint_state_publisher_node,
-        robot_state_publisher_node,  
+        robot_state_publisher_node,
+        bridge_camera,  
         *ign
     ]
     return LaunchDescription(declared_arguments+nodes_to_start)
