@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<xacro:macro name="camera" params="name_camera_link name_joint ">
+<xacro:macro name="camera" params=" parent child ">
     <!-- added camera link -->
-    <link name="${name_camera_link}">
+    <link name="camera_link">
         <visual>
         <geometry>
             <box size='0.05 0.05 0.05'/>
@@ -27,11 +27,15 @@
     </link>
 
     <!-- added  camera joint -->
-    <joint name="${name_joint}" type="fixed">
-        <parent link="base_link"/>
-        <child link="${name_camera}"/>
+    <joint name="camera_joint" type="fixed">
+        <parent link="${parent}"/>
+        <child link="${child}"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
+
+    <xacro:include filename="$(find arm_gazebo)/urdf/arm_camera.xacro"/>
+    <xacro:arm_camera link="camera_link"/>
+
 
 
 </xacro:macro>
