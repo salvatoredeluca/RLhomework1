@@ -1,1 +1,45 @@
-# RLhomework1
+## Robotics Lab Homework1
+
+This repository contains the three ROS packages required for the homework 1 of the course. In the following the instructions to run the packages correctly.
+
+## Build and Source
+
+Once you cloned the repository in your ROS2 workspace, build the packages.
+
+```bash
+colcon build
+```
+then source 
+```bash
+source install/setup.bash```
+
+## Visualize the manipulator in RViz
+
+```bash
+ros2 launch arm_description display.launch.py
+```
+
+
+##Visualize the manipulator in Gazebo with the controllers loaded
+```bash
+ros2 launch arm_gazebo arm_gazebo.launch.py
+```
+
+#From another terminal run the command and then open the plugin rqt_image_view
+```bash
+rqt
+```
+##Run the ROS publisher and subscriber node
+
+In another terminal run
+```bash
+ros2 run arm control arm control node
+```
+
+
+
+
+
+
+
+

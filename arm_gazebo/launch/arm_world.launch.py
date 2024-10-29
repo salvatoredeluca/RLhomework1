@@ -10,8 +10,6 @@ from launch.actions import (
     DeclareLaunchArgument,
     IncludeLaunchDescription,
 )
-from launch.actions import RegisterEventHandler
-from launch.event_handlers import OnProcessExit
 
 
  
@@ -19,16 +17,6 @@ def generate_launch_description():
     declared_arguments = []
 
     rlhomework1_path = get_package_share_directory('arm_description')
-
-    # declared_arguments.append(
-    #     DeclareLaunchArgument(
-    #         "rviz_config_file", 
-    #         default_value=PathJoinSubstitution(
-    #             [FindPackageShare("ros2_sensors_and_actuators"), "config", "rviz", "iiwa.rviz"]
-    #         ),
-    #         description="RViz config file (absolute path) to use when launching rviz.",
-    #     )
-    # )
     
 
     xacro_arm = os.path.join(rlhomework1_path, "urdf", "arm.urdf.xacro")
@@ -37,16 +25,7 @@ def generate_launch_description():
     robot_description_arm_xacro = {"robot_description": Command(['xacro ', xacro_arm])}
 
 
-    # urdf_arm = os.path.join(rl_21_10_2024_exercise_path, "urdf", "arm.urdf")
-    # with open(urdf_arm, 'r') as info:
-    #     arm_description = info.read()
-
-
-    # arm_description_urdf = {"robot_description":arm_description }
-
-
-
-    # robot_description_iiwa_xacro = {"robot_description": Command(['xacro ', xacro_iiwa, ' joint_a3_pos:=2.0', ' joint_a4_pos:=0.2'])}
+   
 
     joint_state_publisher_node = Node(
         package="joint_state_publisher_gui",
@@ -121,38 +100,4 @@ def generate_launch_description():
 
 
 
-    # rviz_node = Node(
-    #     package="rviz2",
-    #     executable="rviz2",
-    #     name="rviz2",
-    #     output="log",
-    #     arguments=["-d", LaunchConfiguration("rviz_config_file")],
-    # )
-
-
-
-    # joint_state_broadcaster = Node(
-    #     package="controller_manager",
-    #     executable="spawner",
-    #     arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager"],
-    # )  
-
-    # position_controller = Node(
-    #     package="controller_manager",
-    #     executable="spawner",
-    #     arguments=["position_controller", "--controller-manager", "/controller_manager"],  
-    # ) 
-
-    # #Launch the ros2 controllers after the model spawns in Gazebo 
-    # delay_joint_traj_controller = RegisterEventHandler(
-    #     event_handler=OnProcessExit(
-    #         target_action=gz_spawn_entity,
-    #         on_exit=[position_controller],
-    #     )
-    # )
-
-    # delay_joint_state_broadcaster = (
-    #     RegisterEventHandler(
-    #         event_handler=OnProcessExit(
-    #             target_action=gz_spawn_entity,
-    #             on_exit=[joint_state_broadca
+   

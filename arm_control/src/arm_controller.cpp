@@ -45,7 +45,7 @@ private:
    void publish_once()
   {
     auto message = std_msgs::msg::Float64MultiArray();
-    message.data = {1.0 ,1.0, 1.0 ,1.0};
+    message.data = {0,-0.5, -0.5 ,0};
     // RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
     publisher_->publish(message);
   }

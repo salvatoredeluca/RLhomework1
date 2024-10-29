@@ -411,38 +411,6 @@
     </inertial>
   </link>
 
-
-<!-- added camera link -->
- <!-- <link name="camera_link">
-    <visual>
-      <geometry>
-        <box size='0.05 0.05 0.05'/>
-      </geometry>
-      <origin rpy="0 0 0" xyz="0 0 0.02"/>
-      <material name="yellow">
-        <color rgba="1 1 0 1"/>
-      </material>
-    </visual>
-      <collision>
-        <geometry>
-          <box size='0.05 0.05 0.05'/>
-        </geometry>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-      </collision>
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.2"/>
-      <inertia ixx="3.3e-05" ixy="0.0" ixz="0.0" iyy="5.8e-05" iyz="0.0" izz="4.1e-05"/>
-    </inertial>
-  </link> -->
-
-  <!-- added  camera joint -->
-  <!-- <joint name="camera_joint" type="fixed">
-      <parent link="base_link"/>
-      <child link="camera_link"/>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-  </joint>
- -->
   <xacro:include filename="$(find arm_gazebo)/urdf/camera.xacro"/>
   <xacro:camera parent="base_link" child="camera_link"/>
 
@@ -465,10 +433,6 @@
 
   <xacro:include filename="$(find arm_description)/urdf/arm_hardware_interface.xacro"/>
 
-
-  <!-- <xacro:include filename="$(find arm_gazebo)/urdf/arm_camera.xacro"/>
-  <xacro:arm_camera link="camera_link"/>
-   -->
   <ros2_control name="HardwareInterface_Ignition" type="system">
 
      <hardware>
