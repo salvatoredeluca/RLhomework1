@@ -21,16 +21,16 @@ ros2 launch arm_description display.launch.py
 ```
 
 
-##Visualize the manipulator in Gazebo with the controllers loaded
+## Visualize the manipulator in Gazebo with the controllers loaded
 ```bash
 ros2 launch arm_gazebo arm_gazebo.launch.py
 ```
 
-#From another terminal run the command and then open the plugin rqt_image_view
+# From another terminal run the command and then open the plugin rqt_image_view
 ```bash
 rqt
 ```
-##Run the ROS publisher and subscriber node
+## Run the ROS publisher and subscriber node
 
 In another terminal run
 ```bash
