@@ -26,7 +26,9 @@ ros2 launch arm_description display.launch.py
 ros2 launch arm_gazebo arm_gazebo.launch.py
 ```
 
-# From another terminal run the command and then open the plugin rqt_image_view
+## Visualize the image seen by the camera
+
+On another terminal run the command and then open the plugin rqt_image_view
 ```bash
 rqt
 ```
