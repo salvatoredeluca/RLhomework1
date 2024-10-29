@@ -11,7 +11,8 @@ colcon build
 ```
 then source 
 ```bash
-source install/setup.bash```
+source install/setup.bash
+```
 
 ## Visualize the manipulator in RViz
 
