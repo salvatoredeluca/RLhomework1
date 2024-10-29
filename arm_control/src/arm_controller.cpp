@@ -25,6 +25,10 @@ public:
       "joint_states", 10, std::bind(&ArmControllerNode::topic_callback, this, _1));
 
     publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("/position_controller/commands", 10);
+
+    timer_ = this->create_wall_timer(
+      20ms, std::bind(&ArmControllerNode::publish_once, this));
+
     publish_once();
       
   }
@@ -52,7 +56,8 @@ private:
   }
 
   rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr publisher_;
-  size_t count_;
+  
+  rclcpp::TimerBase::SharedPtr timer_;
 };
  
 
