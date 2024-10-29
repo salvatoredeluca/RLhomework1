@@ -28,10 +28,13 @@ ros2 launch arm_gazebo arm_gazebo.launch.py
 
 ## Visualize the image seen by the camera
 
-On another terminal run the command and then open the plugin rqt_image_view
+On another terminal run the command
 ```bash
 rqt
 ```
+
+then open the plugin rqt_image_view
+
 ## Run the ROS publisher and subscriber node
 
 In another terminal run
