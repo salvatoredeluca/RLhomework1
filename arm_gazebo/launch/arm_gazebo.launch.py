@@ -1,4 +1,5 @@
 from launch import LaunchDescription
+from launch_ros.actions import Node
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 import os
@@ -14,12 +15,10 @@ def generate_launch_description():
     path2_c=os.path.join(path2, "launch", "arm_control.launch.py")
 
     return LaunchDescription([
-        
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(path1_c),
         ),
-
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(path2_c),
-        )
+        ),
     ])

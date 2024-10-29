@@ -14,6 +14,7 @@ using std::placeholders::_1;
 using namespace std::chrono_literals;
 
 
+
 class ArmControllerNode : public rclcpp::Node
 {
 public:
@@ -45,14 +46,16 @@ private:
    void publish_once()
   {
     auto message = std_msgs::msg::Float64MultiArray();
-    message.data = {0,-0.5, -0.5 ,0};
-    // RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
+    message.data = {0 ,-0.5, -0.5 ,0};
+   
     publisher_->publish(message);
   }
 
   rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr publisher_;
-  
+  size_t count_;
 };
+ 
+
 
 int main(int argc, char * argv[])
 {
@@ -61,16 +64,3 @@ int main(int argc, char * argv[])
   rclcpp::shutdown();
   return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

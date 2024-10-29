@@ -10,6 +10,8 @@ from launch.actions import (
     DeclareLaunchArgument,
     IncludeLaunchDescription,
 )
+from launch.actions import RegisterEventHandler
+from launch.event_handlers import OnProcessExit
 
 
  
@@ -17,16 +19,17 @@ def generate_launch_description():
     declared_arguments = []
 
     rlhomework1_path = get_package_share_directory('arm_description')
-    
+
+
 
     xacro_arm = os.path.join(rlhomework1_path, "urdf", "arm.urdf.xacro")
-    
+
 
     robot_description_arm_xacro = {"robot_description": Command(['xacro ', xacro_arm])}
 
 
-   
 
+    
     joint_state_publisher_node = Node(
         package="joint_state_publisher_gui",
         executable="joint_state_publisher_gui",
@@ -36,14 +39,13 @@ def generate_launch_description():
         package="robot_state_publisher",
         executable="robot_state_publisher",
         output="both",
-        parameters=[robot_description_arm_xacro ,
+        parameters=[ robot_description_arm_xacro,
                     {"use_sim_time": True},
             ],
     remappings=[('/robot_description', '/robot_description')]    
     )
     
-    
-
+   
 
     declared_arguments.append(DeclareLaunchArgument('gz_args', default_value='-r -v 1 empty.sdf',
                               description='Arguments for gz_sim'),)
@@ -73,7 +75,6 @@ def generate_launch_description():
  
     ign = [gazebo_ignition, gz_spawn_entity]
 
-
     bridge_camera = Node(
         package='ros_ign_bridge',
         executable='parameter_bridge',
@@ -84,20 +85,14 @@ def generate_launch_description():
             '-r', '/camera:=/videocamera',
         ],
         output='screen'
-    )
+    ) 
 
-     
-
+    
     nodes_to_start = [
         joint_state_publisher_node,
-        robot_state_publisher_node,
-        bridge_camera,  
-        *ign
+        robot_state_publisher_node,  
+        *ign,
+        bridge_camera
+       
     ]
     return LaunchDescription(declared_arguments+nodes_to_start)
-
-
-
-
-
-   

@@ -39,7 +39,7 @@ then open the plugin rqt_image_view
 
 In another terminal run
 ```bash
-ros2 run arm control arm control node
+ros2 run arm_control arm_control_node
 ```
 
 

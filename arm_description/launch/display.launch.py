@@ -1,13 +1,20 @@
 from launch import LaunchDescription
-from launch.substitutions import Command, PathJoinSubstitution
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import Command, LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 import os
 from ament_index_python.packages import get_package_share_directory
-from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.actions import (
+    DeclareLaunchArgument,
+    IncludeLaunchDescription,
+)
+from launch.actions import RegisterEventHandler
+from launch.event_handlers import OnProcessExit
 
 
+ 
 def generate_launch_description():
     declared_arguments = []
     
@@ -16,7 +23,7 @@ def generate_launch_description():
 
     declared_arguments.append(
         DeclareLaunchArgument(
-            "rviz_config_file", 
+            "rviz_config_file",   
             default_value=PathJoinSubstitution(
                 [FindPackageShare("arm_description"), "config", "rviz", "arm.rviz"]
             ),
@@ -24,10 +31,15 @@ def generate_launch_description():
         )
     )
 
+
+
     xacro_arm = os.path.join(rlhomework1_path, "urdf", "arm.urdf.xacro")
     
 
     robot_description_arm_xacro = {"robot_description": Command(['xacro ', xacro_arm])}
+
+
+   
 
     joint_state_publisher_node = Node(
         package="joint_state_publisher_gui",
@@ -52,17 +64,21 @@ def generate_launch_description():
         arguments=["-d", LaunchConfiguration("rviz_config_file")],
     )
 
-    declared_arguments.append(DeclareLaunchArgument('gz_args', default_value='-r -v 1 empty.sdf',
-                              description='Arguments for gz_sim'),)
-  
+    
+
+    
+    
     nodes_to_start = [
         robot_state_publisher_node,
-        joint_state_publisher_node, 
-        rviz_node      
+        joint_state_publisher_node,
+        # joint_state_broadcaster,
+        rviz_node
+        
     ]
+
 
     return LaunchDescription( declared_arguments+nodes_to_start) 
 
 
 
-   
+ 
