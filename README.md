@@ -1,4 +1,4 @@
-##🤖 Robotics Lab Homework1
+🤖## Robotics Lab Homework1
 
 This repository contains the three ROS packages required for the homework 1 of the course. In the following the instructions to run the packages correctly.
 
